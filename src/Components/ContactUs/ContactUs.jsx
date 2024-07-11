@@ -4,8 +4,8 @@ import { AiFillPhone } from "react-icons/ai";
 
 const ContactUs = () => {
       return (
-            <div className="max-w-7xl pb-20 mx-auto">
-                  <h5 style={{ fontFamily: 'Playpen Sans' }} className="text-6xl pt-20 mb-5 font-medium text-center text-[#244034] dark:text-white">Contact Us</h5>
+            <div className="max-w-7xl lg:pb-20 mx-auto">
+                  <h5 style={{ fontFamily: 'Playpen Sans' }} className="text-6xl pt-10 lg:pt-20 mb-5 font-medium text-center text-[#244034] dark:text-white">Contact Us</h5>
                   <p className="w-full mx-auto text-center md:w-3/4 lg:w-1/2 text-lg font-medium text-gray-500 pb-12">If you have any questions or would like to inquire about our services, feel free to get in touch with us. We are here to help!</p>
 
                   <div className="flex gap-6 flex-col p-3 lg:p-0 lg:flex-row">
