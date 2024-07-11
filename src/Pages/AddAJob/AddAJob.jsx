@@ -3,13 +3,14 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
+import useAxios from "../../Hooks/useAxios";
 
 const AddAJob = () => {
 
       const { user } = useAuth();
       const userName = user?.displayName;
       const userEmail = user?.email;
-
+      const axios = useAxios()
 
       const [jobCategory, setJobCategory] = useState('');
       const [title, setTitle] = useState('');
@@ -51,7 +52,7 @@ const AddAJob = () => {
             };
 
             // add a job
-            axios.post('http://localhost:5000/allJobs', formData)
+            axios.post('/all-jobs', formData)
                   .then(data => {
                         if (data.data.insertedId) {
                               Swal.fire({

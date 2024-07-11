@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import Register from "../Pages/Register/Register";
 import Login from "../Pages/Login/Login";
 import AddAJob from "../Pages/AddAJob/AddAJob";
+import AllJob from "../Pages/AllJob/AllJob";
 
 const router = createBrowserRouter([
       {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
                   {
                         path: '/add-a-job',
                         element: <AddAJob />
+                  },
+                  {
+                        path: '/all-jobs',
+                        element: <AllJob />
                   },
                   {
                         path: '/register',
