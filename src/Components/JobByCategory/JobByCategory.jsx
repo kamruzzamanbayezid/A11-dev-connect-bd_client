@@ -28,7 +28,6 @@ const JobByCategory = () => {
                   <div className=''>
                         <Tabs>
                               <TabList className="react-tabs__tab-list">
-
                                     <Tab onClick={() => handleJobsByCategory('OnSiteJob')}>On Site Job</Tab>
                                     <Tab onClick={() => handleJobsByCategory('RemoteJob')}>Remote Job</Tab>
                                     <Tab onClick={() => handleJobsByCategory('Hybrid')}>Hybrid</Tab>
