@@ -24,7 +24,7 @@ const JobByCategory = () => {
       };
 
       return (
-            <div className='max-w-7xl mx-auto '>
+            <div className='max-w-7xl mx-auto pb-10 lg:pb-20'>
                   <div className=''>
                         <Tabs>
                               <TabList className="react-tabs__tab-list">

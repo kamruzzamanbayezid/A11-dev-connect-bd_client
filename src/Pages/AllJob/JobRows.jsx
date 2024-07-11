@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { AiOutlineFundView } from "react-icons/ai";
+import { Link } from 'react-router-dom';
 
 const JobRows = ({ job, idx }) => {
 
@@ -26,11 +27,14 @@ const JobRows = ({ job, idx }) => {
                         {salaryRange}
                   </td>
 
-
+                  {/* view details button */}
                   <td className='px-4 py-4 '>
-                        <button>
-                              <AiOutlineFundView className='w-6 h-6 hover:text-red-500' title='View Details' />
-                        </button>
+                        <Link to={`/job-details/${_id}`}>
+                              <button>
+                                    <AiOutlineFundView className='w-6 h-6 hover:text-red-500' title='View Details' />
+                              </button>
+                        </Link>
+
                   </td>
             </tr>
       );
