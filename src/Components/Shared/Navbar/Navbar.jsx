@@ -46,7 +46,7 @@ const Navbar = () => {
             {
                   user?.email &&
                   <li className="text-lg font-normal">
-                        <NavLink to="/addAJob" style={({ isActive }) => ({
+                        <NavLink to="/add-a-job" style={({ isActive }) => ({
                               color: isActive ? '#D2F34C' : '#FFF'
                         })}>
                               Add a Job

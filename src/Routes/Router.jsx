@@ -3,6 +3,7 @@ import MainLayouts from "../Layouts/MainLayouts";
 import Home from "../Pages/Home/Home";
 import Register from "../Pages/Register/Register";
 import Login from "../Pages/Login/Login";
+import AddAJob from "../Pages/AddAJob/AddAJob";
 
 const router = createBrowserRouter([
       {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
                   {
                         path: '/',
                         element: <Home />
+                  },
+                  {
+                        path: '/add-a-job',
+                        element: <AddAJob />
                   },
                   {
                         path: '/register',
