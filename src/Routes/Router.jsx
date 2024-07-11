@@ -9,6 +9,7 @@ import JobDetails from "../Pages/JobDetails/JobDetails";
 import MyJobs from "../Pages/MyJobs/MyJobs";
 import UpdateJob from "../Pages/MyJobs/UpdateJob";
 import ErrorPage from "../Pages/ErrorPage";
+import Blog from "../Pages/Blog/Blog";
 
 const router = createBrowserRouter([
       {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
                   {
                         path: '/login',
                         element: <Login />
+                  },
+                  {
+                        path: '/blogs',
+                        element: <Blog />
                   }
             ]
       }
