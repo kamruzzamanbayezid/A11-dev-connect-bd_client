@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const JobRows = ({ job, idx, handleDelete }) => {
 
@@ -36,9 +37,11 @@ const JobRows = ({ job, idx, handleDelete }) => {
                         </button>
 
                         {/* update button */}
-                        <button>
-                              <FaRegEdit className='w-6 h-6 hover:text-red-500' title='Update the Job' />
-                        </button>
+                        <Link to={`/update-job/${_id}`}>
+                              <button>
+                                    <FaRegEdit className='w-6 h-6 hover:text-red-500' title='Update the Job' />
+                              </button>
+                        </Link>
 
 
                   </td>

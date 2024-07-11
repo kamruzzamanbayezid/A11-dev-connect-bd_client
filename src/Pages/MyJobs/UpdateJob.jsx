@@ -1,0 +1,142 @@
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
+import useAxios from "../../Hooks/useAxios";
+import { useParams } from "react-router-dom";
+
+const UpdateJob = () => {
+
+      const [job, setJob] = useState({});
+      const axios = useAxios();
+      const { id } = useParams();
+      const { user } = useAuth();
+      const userName = user?.displayName;
+
+      const [jobCategory, setJobCategory] = useState("")
+      const [title, setTitle] = useState("");
+      const [image, setImage] = useState("");
+      const [logo, setLogo] = useState("");
+      const [salaryRange, setSalaryRange] = useState("");
+      const [postingDate, setPostingDate] = useState("");
+      const [deadline, setDeadline] = useState("");
+      const [applicantsNumber, setApplicantsNumber] = useState("");
+      const [description, setDescription] = useState("");
+
+
+      useEffect(() => {
+            axios
+                  .get(`/job/${id}`)
+                  .then((data) => {
+                        setJob(data.data);
+                        // Set state values based on the fetched job data
+                        setJobCategory(data.data.jobCategory);
+                        setTitle(data.data.title);
+                        setImage(data.data.image);
+                        setLogo(data.data.logo);
+                        setSalaryRange(data.data.salaryRange);
+                        setPostingDate(data.data.postingDate);
+                        setDeadline(data.data.deadline);
+                        setApplicantsNumber(data.data.applicantsNumber);
+                        setDescription(data.data.description);
+                  })
+                  .catch((error) => {
+                        toast.error("Error fetching job details:", error.message);
+                  });
+
+      }, [axios, id])
+
+      console.log('inside update', job);
+
+     
+      return (
+            <div >
+                  <div className="bg-[#244034] min-h-[35vh] flex items-center justify-center">
+                        <h1 style={{ fontFamily: 'Playpen Sans' }} className="text-center text-5xl  text-white font-light">Update Job</h1>
+                  </div>
+                  <div className="max-w-7xl mx-auto my-10">
+                        <form onSubmit={handleUpdateJobs} className="lg:w-4/5 p-4 mx-auto">
+                              <div className="grid gap-6 mb-6 md:grid-cols-2">
+                                    <div>
+                                          <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Name</label>
+                                          <input defaultValue={user?.displayName
+                                          }
+                                                type="text" id="first_name" name="userName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                    </div>
+
+                                    <div>
+                                          <label htmlFor="job_title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Job title</label>
+                                          <input value={title}
+                                                onChange={(e) => setTitle(e.target.value)} type="text" id="job_title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter job title" required />
+                                    </div>
+                                    <div>
+                                          <label htmlFor="salary" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salary range</label>
+                                          <input name="text"
+                                                value={salaryRange}
+                                                onChange={(e) => setSalaryRange(e.target.value)}
+                                                type="text" id="salary" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Salary Range" required />
+                                    </div>
+                                    <div>
+                                          <label htmlFor="applicants" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Applicants Number</label>
+                                          <input type="number"
+                                                name="applicants-number"
+                                                value={applicantsNumber}
+                                                onChange={(e) => setApplicantsNumber(e.target.value)}
+                                                readOnly id="applicants" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="applicants number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
+                                    </div>
+                                    <div>
+                                          <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Posting Date</label>
+                                          <input type="date"
+                                                name="postingDate"
+                                                value={postingDate}
+                                                onChange={(e) => setPostingDate(e.target.value)} id="date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Posting Date" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
+                                    </div>
+                                    <div>
+                                          <label htmlFor="deadline" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Application Deadline</label>
+                                          <input type="date"
+                                                name="deadline"
+                                                value={deadline}
+                                                onChange={(e) => setDeadline(e.target.value)} id="deadline" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="application deadline" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required />
+                                    </div>
+
+
+                                    <div>
+                                          <label htmlFor="url" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Photo URL</label>
+                                          <input name="image"
+                                                value={image}
+                                                onChange={(e) => setImage(e.target.value)} type="photo_URL" id="url" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Photo URL" required />
+                                    </div>
+                                    <select name="jobCategory" value={jobCategory} onChange={(e) => { setJobCategory(e.target.value) }}>
+                                          <option value="">Select Job Category</option>
+                                          <option value="OnSiteJob">On Site Job</option>
+                                          <option value="RemoteJob">Remote Job</option>
+                                          <option value="Hybrid">Hybrid</option>
+                                          <option value="PartTime">Part Time</option>
+                                    </select>
+                              </div>
+
+                              <div>
+                                    <label htmlFor="logo" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company Logo</label>
+                                    <input name="logo"
+                                          value={logo}
+                                          onChange={(e) => setLogo(e.target.value)} type="photo_URL" id="logo" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="company logo" required />
+                              </div>
+
+                              <div className="my-6">
+                                    <label htmlFor="sort_des" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sort Description</label>
+                                    <textarea name="description"
+                                          value={description}
+                                          onChange={(e) => setDescription(e.target.value)} rows="3" type="text" id="sort_des" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Short Description" required />
+                              </div>
+
+                              <button type="submit" className="w-full text-white bg-[#244034] hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
+
+
+                        </form>
+
+                  </div>
+            </div>
+      );
+};
+
+export default UpdateJob;
