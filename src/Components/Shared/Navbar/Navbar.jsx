@@ -146,7 +146,7 @@ const Navbar = () => {
                               {
                                     user?.email && <div className="dropdown dropdown-end ml-2">
                                           <div tabIndex={0}>
-                                                <img src={user.photoURL} className="w-14 h-14 rounded-full" />
+                                                <img src={user.photoURL} className="w-12 h-12 rounded-full" />
                                           </div>
                                           <ul tabIndex={0} className="dropdown-content z-[1] p-3 shadow bg-base-100 rounded-box w-fit">
                                                 <li><a className="text-[#E7AB3C] mb-2">{user.displayName}</a></li>
