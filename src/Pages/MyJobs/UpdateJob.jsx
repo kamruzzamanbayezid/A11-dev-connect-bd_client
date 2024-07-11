@@ -48,7 +48,40 @@ const UpdateJob = () => {
 
       console.log('inside update', job);
 
-     
+      const handleUpdateJobs = e => {
+            e.preventDefault();
+
+            const formData = {
+                  jobCategory,
+                  title,
+                  userName,
+                  image,
+                  logo,
+                  salaryRange,
+                  postingDate,
+                  deadline,
+                  applicantsNumber,
+                  description,
+            };
+
+
+            // update a job
+            axios.put(`/job/${job._id}`, formData)
+                  .then(data => {
+                        console.log(data.data);
+                        if (data.data.modifiedCount > 0) {
+                              Swal.fire({
+                                    title: "Good job!",
+                                    text: "Successfully update the job!",
+                                    icon: "success"
+                              });
+                        }
+                  })
+                  .catch(error => {
+                        console.log(error.message);
+                  })
+      };
+
       return (
             <div >
                   <div className="bg-[#244034] min-h-[35vh] flex items-center justify-center">
