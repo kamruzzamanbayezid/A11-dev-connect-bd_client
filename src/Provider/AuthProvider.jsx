@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../Config/Firebase.config";
 import { createContext, useEffect, useState } from 'react';
+import useAxios from '../Hooks/useAxios';
 
 export const AuthContent = createContext();
 const googleProvider = new GoogleAuthProvider();
@@ -12,6 +13,7 @@ const AuthProvider = ({ children }) => {
 
       const [user, setUser] = useState({});
       const [isLoading, setIsLoading] = useState(true);
+      const axios = useAxios();
 
       // Google login
       const googleLogin = () => {
@@ -49,9 +51,22 @@ const AuthProvider = ({ children }) => {
       // informer
       useEffect(() => {
             const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+                  const loggedUser = { email: currentUser?.email || user?.email }
                   setUser(currentUser);
                   setIsLoading(false);
                   console.log('Logged In User', currentUser);
+
+                  // jwt
+                  if (currentUser) {
+                        try {
+                              axios.post('/jwt', loggedUser, { withCredentials: true })
+                                    .then(res => {
+                                          console.log('user logged in', res.data);
+                                    })
+                        } catch (error) {
+                              console.log(error?.message);
+                        }
+                  }
 
             })
             return () => {

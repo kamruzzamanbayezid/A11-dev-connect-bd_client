@@ -1,6 +1,6 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxios from '../../Hooks/useAxios';
 import './JobByCategory.css'
 import JobCard from './JobCard';
@@ -10,6 +10,18 @@ const JobByCategory = () => {
       const axios = useAxios();
       const [jobByCategory, setJobByCategory] = useState([]);
 
+      useEffect(() => {
+            const onSiteJob = async () => {
+                  try {
+                        const response = await axios.get(`/all-jobs/OnSiteJob`);
+                        setJobByCategory(response.data);
+
+                  } catch (error) {
+                        console.error('Error fetching jobs:', error);
+                  }
+            }
+            onSiteJob()
+      }, [axios])
 
       // jobs by category
       const handleJobsByCategory = async (category) => {
