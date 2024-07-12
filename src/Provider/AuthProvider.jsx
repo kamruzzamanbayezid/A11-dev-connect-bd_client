@@ -67,6 +67,12 @@ const AuthProvider = ({ children }) => {
                               console.log(error?.message);
                         }
                   }
+                  else {
+                        axios.post('/logout', loggedUser, { withCredentials: true })
+                              .then(res => {
+                                    console.log('user logged out', res.data);
+                              })
+                  }
 
             })
             return () => {
