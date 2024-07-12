@@ -17,7 +17,7 @@ const JobDetails = () => {
       const [loggedUser, setLoggedUser] = useState(user?.displayName);
       const [loggedEmail, setLoggedEmail] = useState(user?.email);
       const [resumeLink, setResumeLink] = useState('');
-      // const [hasApplied, setHasApplied] = useState(false);
+      const [hasApplied, setHasApplied] = useState(false);
 
       const { jobCategory, title, userName, userEmail, image, logo, salaryRange, postingDate, deadline, applicantsNumber, description } = jobDetails || {};
 
@@ -38,17 +38,44 @@ const JobDetails = () => {
                         toast.error("Error fetching job details:", error.message);
                   });
 
-      }, [axios, id])
+
+            if (user) {
+                  setLoggedUser(user?.displayName)
+                  setLoggedEmail(user?.email)
+
+                  const userEmail = user.email;
+                  axios.get(`/applied-jobs?loggedEmail=${userEmail}`)
+                        .then((data) => {
+                              const appliedJobs = data.data;
+                              const jobIds = appliedJobs.map((job) => job?.jobId);
+                              
+                              if (jobIds.includes(id)) {
+                                    setHasApplied(true);
+                              }
+                        });
+            }
+
+      }, [axios, id, user])
 
       const handleApplyJob = () => {
-            document.getElementById("apply-modal").showModal();
+            if (hasApplied) {
+                  toast.error("You have already applied for this job.");
+            } else if (!matchUser && !isDeadlinePassed) {
+                  document.getElementById("apply-modal").showModal();
+            } else {
+                  if (matchUser) {
+                        toast.error("You cannot apply for your own job.");
+                  } else if (isDeadlinePassed) {
+                        toast.error("The application deadline has passed.");
+                  }
+            }
       }
 
       const handleSubmitJob = (e) => {
             e.preventDefault();
 
             const formData = {
-                  // jobId: id,
+                  jobId: id,
                   jobCategory,
                   title,
                   loggedUser,
@@ -72,25 +99,25 @@ const JobDetails = () => {
                                     icon: "success"
                               });
 
-                              // axios
-                              //       .put(`/allJobs/singleJobs/${id}`, { applicantsNumber: applicantsNumber + 1 })
-                              //       .then((data) => {
-                              //             if (data.status === 200) {
-                              //                   Swal.fire({
-                              //                         title: "Good job!",
-                              //                         text: "Successfully added the job!",
-                              //                         icon: "success"
-                              //                   });
+                              axios
+                                    .put(`/job/${id}`, { applicantsNumber: applicantsNumber + 1 })
+                                    .then((data) => {
+                                          if (data.status === 200) {
+                                                Swal.fire({
+                                                      title: "Good job!",
+                                                      text: "Successfully added the job!",
+                                                      icon: "success"
+                                                });
 
-                              //                   // update in the ui
-                              //                   axios.get(`/allJobs/singleJobs/${id}`).then((data) => {
-                              //                         setJobDetails(data.data);
-                              //                   });
-                              //             }
-                              //       })
-                              //       .catch((error) => {
-                              //             toast.error(error.message);
-                              //       });
+                                                // update in the ui
+                                                axios.get(`/job/${id}`).then((data) => {
+                                                      setJobDetails(data.data);
+                                                });
+                                          }
+                                    })
+                                    .catch((error) => {
+                                          toast.error(error.message);
+                                    });
 
                         }
                         else {

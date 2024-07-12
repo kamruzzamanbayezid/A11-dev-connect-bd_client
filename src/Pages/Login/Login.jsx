@@ -28,9 +28,7 @@ const Login = () => {
             login(email, password)
                   .then(res => {
                         toast.success('You Successfully Logged In')
-                        // navigate(location.state ? location.state : '/')
-                        // window.location.reload();
-                        console.log(res);
+                        navigate(location.state ? location.state : '/')
                   })
                   .catch(error => {
                         toast.error(error.message);
