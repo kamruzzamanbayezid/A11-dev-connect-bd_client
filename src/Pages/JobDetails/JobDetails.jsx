@@ -60,8 +60,6 @@ const JobDetails = () => {
                   deadline,
             };
 
-            console.log(formData);
-
             // apply for a job
             axios.post('/applied-jobs', formData)
                   .then(data => {
